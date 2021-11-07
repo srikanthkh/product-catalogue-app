@@ -3,10 +3,10 @@ import "./styles.css";
 
 export interface SelectProps {
     name: string;
-    value?: string | number;
+    value?: string;
     extraAttrs?: {[key: string]: string};
     children?: React.ReactNode;
-    handleChange?: (id: string, value: string | number) => void;
+    handleChange?: (id: string, value: string) => void;
 }
 
 const Select = (props: SelectProps) => {

@@ -2,18 +2,17 @@ import React from 'react';
 import './App.css';
 import Button from './components/button'
 import Table from './components/table'
-import Select from './components/select'
+import CurrencyPicklist from './CurrencyPicklist'
 import Input from './components/input'
 import useModal from './components/modal'
+import {CurrencyProvider} from './contexts/currency'
+
 function App() {
   const { show, RenderModal } = useModal()
   return (
+    <CurrencyProvider>
     <div className="App">
-      <Select name="currency" value="USD" >
-      {
-        ["USD", "CAD", "GBP"].map((currency) => <option value={currency}>{currency}</option>)
-      }
-      </Select>
+        <CurrencyPicklist currencies={["USD", "CAD", "GBP"]} />
         <Table>
           <thead>
             <tr>
@@ -44,6 +43,7 @@ function App() {
         </RenderModal>
         <div id='modal-root' />
     </div>
+    </CurrencyProvider>
   );
 }
 
