@@ -7,14 +7,11 @@ shouldFitContainer that can add a class that sets width and height to 100%.*/
 export declare type ButtonType = "button" | "submit";
 
 export interface ComponentProps {
+    type: ButtonType;
+    isDisabled?: boolean;
     extraAttrs?: {[key: string]: string};
     className?: string;
     children?: React.ReactNode;
-}
-
-export interface PropsWithDefault {
-    type: ButtonType;
-    isDisabled?: boolean;
     onClick?(e: React.MouseEvent<HTMLElement>): void;
 }
 
@@ -29,7 +26,7 @@ const generateClassNameList = (className: string|undefined, isDisabled: boolean|
     return classList.filter((className) => className).join(" ");
 }
 
-const Button = (props: ComponentProps & PropsWithDefault) => (
+const Button = (props: ComponentProps) => (
     <button
         disabled={props.isDisabled}
         className={generateClassNameList(props.className, props.isDisabled)}

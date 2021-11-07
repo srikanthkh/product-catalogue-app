@@ -3,6 +3,7 @@ import './App.css';
 import Button from './components/button'
 import Table from './components/table'
 import Select from './components/select'
+import Input from './components/input'
 
 function App() {
   return (
@@ -12,7 +13,6 @@ function App() {
         ["USD", "CAD", "GBP"].map((currency) => <option value={currency}>{currency}</option>)
       }
       </Select>
-      <header className="App-header">
         <Table>
           <thead>
             <tr>
@@ -36,7 +36,8 @@ function App() {
             </tr>
           </tbody>
         </Table>
-      </header>
+        <Input value="Mango" showLabel label="Name" name="name"></Input>
+        <Input value="34" showLabel label="Price" name="price" helperText="Enter value in USD"></Input>
     </div>
   );
 }
