@@ -1,12 +1,12 @@
 import * as React from "react";
 import "./styles.css";
 
-export interface TableProps {
+export interface ComponentProps {
     className?: string;
     children?: React.ReactNode;
 }
 
-const Table = (props: TableProps) => (
+const Table = (props: ComponentProps) => (
     <table className={`table ${props.className}`}>{props.children}</table>
 );
 

@@ -2,10 +2,16 @@ import React from 'react';
 import './App.css';
 import Button from './components/button'
 import Table from './components/table'
+import Select from './components/select'
 
 function App() {
   return (
     <div className="App">
+      <Select name="currency" value="USD" >
+      {
+        ["USD", "CAD", "GBP"].map((currency) => <option value={currency}>{currency}</option>)
+      }
+      </Select>
       <header className="App-header">
         <Table>
           <thead>
