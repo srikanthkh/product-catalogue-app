@@ -1,20 +1,19 @@
 import * as React from "react";
 import "./styles.css";
 
-export interface ComponentProps {
+export interface InputProps {
     name: string;
     label: string;
     type?: string;
     value?: string | number;
     showLabel?: boolean;
-    className?: string;
     helperText?: string;
     extraAttrs?: {[key: string]: string};
     children?: React.ReactNode;
     handleChange?: (id: string, value: string | number) => void;
 }
 
-const Input = (props: ComponentProps) => {
+const Input = (props: InputProps) => {
     const [val, setVal] = React.useState(props.value || "");
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setVal(e.target.value);

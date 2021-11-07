@@ -1,6 +1,7 @@
 .input-container {
     display: flex;
     flex-direction: column;
+    margin-bottom: 10px;
 }
 
 .input-container input {
@@ -8,7 +9,7 @@
 }
 
 .input-container label {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .help-text {

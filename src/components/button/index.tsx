@@ -6,7 +6,7 @@ shouldFitContainer that can add a class that sets width and height to 100%.*/
 
 export declare type ButtonType = "button" | "submit";
 
-export interface ComponentProps {
+export interface ModalProps {
     type: ButtonType;
     isDisabled?: boolean;
     extraAttrs?: {[key: string]: string};
@@ -26,7 +26,7 @@ const generateClassNameList = (className: string|undefined, isDisabled: boolean|
     return classList.filter((className) => className).join(" ");
 }
 
-const Button = (props: ComponentProps) => (
+const Button = (props: ModalProps) => (
     <button
         disabled={props.isDisabled}
         className={generateClassNameList(props.className, props.isDisabled)}

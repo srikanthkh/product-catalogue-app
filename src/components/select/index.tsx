@@ -1,16 +1,15 @@
 import * as React from "react";
 import "./styles.css";
 
-export interface ComponentProps {
+export interface SelectProps {
     name: string;
     value?: string | number;
-    className?: string;
     extraAttrs?: {[key: string]: string};
     children?: React.ReactNode;
     handleChange?: (id: string, value: string | number) => void;
 }
 
-const Select = (props: ComponentProps) => {
+const Select = (props: SelectProps) => {
     const [val, setVal] = React.useState(props.value || "");
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setVal(e.target.value);
