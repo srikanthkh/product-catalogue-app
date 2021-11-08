@@ -13,9 +13,28 @@ interface ProductTableProps {
 }
 
 const ProductTable = (props: ProductTableProps) => {
-    const {
-        state: { currency },
-      } = useCurrency()
+  const {
+      state: { currency },
+    } = useCurrency()
+  const [products, setProducts] = React.useState(props.products); 
+      React.useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            fetch(`http://localhost:3000/products?currency=${currency}`, { method: 'GET' }).then(res => {
+              return res.json()
+            })
+            .then(data => {
+              if (data.error) {
+                throw data.error
+              }
+              setProducts(data)
+            })
+          } catch (err) {
+            console.log(err)
+          }
+        }
+        fetchProducts()
+      }, [currency])
     return (
         <Table>
           <thead>
@@ -27,7 +46,7 @@ const ProductTable = (props: ProductTableProps) => {
           </thead>
           <tbody>
             {
-                props.products.map(product => {
+                products.map(product => {
                     console.log('product', product)
                     return (
                         <tr key={product.id}>

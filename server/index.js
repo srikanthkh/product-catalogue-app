@@ -1,6 +1,6 @@
 const { App } = require('./app');
 
-const port = 8000;
+const port = 3000;
 
 (async () => {
   const app = await App();
