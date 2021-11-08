@@ -6,11 +6,12 @@ export interface InputProps {
     label: string;
     type?: string;
     value?: string | number;
+    isDisabled?: boolean;
     showLabel?: boolean;
     helperText?: string;
     extraAttrs?: {[key: string]: string};
     children?: React.ReactNode;
-    handleChange?: (id: string, value: string | number) => void;
+    handleChange?: (id: string, value: any) => void;
 }
 
 const Input = (props: InputProps) => {
@@ -29,6 +30,7 @@ const Input = (props: InputProps) => {
                 name={props.name}
                 type={props.type}
                 value={val}
+                disabled={props.isDisabled}
                 onChange={handleChange}
                 {...props.extraAttrs}>
                 {props.children}
@@ -40,6 +42,7 @@ const Input = (props: InputProps) => {
 
 Input.defaultProps = {
     type: "text",
+    isDisabled: false,
     showLabel: false,
     helperText: false,
 };
