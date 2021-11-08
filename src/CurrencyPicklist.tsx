@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Select from './components/select'
-import {useCurrency} from './contexts/currency'
+import { useCurrency } from './contexts/currency'
 
 interface CurrencyPicklistProps {
     currencies: string[]
