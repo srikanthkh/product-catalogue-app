@@ -1,0 +1,22 @@
+{
+  "name": "product-info",
+  "version": "1.0.0",
+  "description": "Product info database",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "jest"
+  },
+  "author": "Galvanize",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.2.1",
+    "supertest": "^6.1.6"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2"
+  }
+}
