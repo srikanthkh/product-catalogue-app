@@ -1,11 +1,11 @@
 .button {
-    position: relative;
-    color: black;
-    cursor: pointer;
-    display: inline-block;
+  position: relative;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
 }
 
 .disabled {
-    background: grey;
-    cursor: not-allowed;
+  background: grey;
+  cursor: not-allowed;
 }

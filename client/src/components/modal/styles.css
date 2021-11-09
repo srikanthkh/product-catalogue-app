@@ -1,28 +1,27 @@
-
 .modal-container {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #fff;
-    width: 100%;
-    z-index: 10;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  z-index: 10;
 }
 .modal-container .modal {
-    font-size: 14px;
-    box-sizing: border-box;
-    position: absolute;
-    width: 100%;
-    z-index: 20;
-    padding: 42px 24px;
-    overflow: auto;
+  font-size: 14px;
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  z-index: 20;
+  padding: 42px 24px;
+  overflow: auto;
 }
 
 .modal-container .close-icon {
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    z-index: 30;
-    top: 10px;
-    font-weight: 600;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  z-index: 30;
+  top: 10px;
+  font-weight: 600;
 }

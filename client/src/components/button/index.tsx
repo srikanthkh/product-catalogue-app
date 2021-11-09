@@ -7,41 +7,38 @@ shouldFitContainer that can add a class that sets width and height to 100%.*/
 export declare type ButtonType = "button" | "submit";
 
 export interface ModalProps {
-    type: ButtonType;
-    isDisabled?: boolean;
-    extraAttrs?: {[key: string]: string};
-    className?: string;
-    children?: React.ReactNode;
-    onClick?(e: React.MouseEvent<HTMLElement>): void;
+  type: ButtonType;
+  isDisabled?: boolean;
+  extraAttrs?: { [key: string]: string };
+  className?: string;
+  children?: React.ReactNode;
+  onClick?(e: React.MouseEvent<HTMLElement>): void;
 }
 
+const generateClassNameList = (
+  className: string | undefined,
+  isDisabled: boolean | undefined
+): string => {
+  const classList = ["button", className, isDisabled ? "disabled" : undefined];
 
-const generateClassNameList = (className: string|undefined, isDisabled: boolean|undefined) :string => {
-    const classList = [
-        "button",
-        className,
-        isDisabled ? "disabled" : undefined,
-    ];
-
-    return classList.filter((className) => className).join(" ");
-}
+  return classList.filter((className) => className).join(" ");
+};
 
 const Button = (props: ModalProps) => (
-    <button
-        disabled={props.isDisabled}
-        className={generateClassNameList(props.className, props.isDisabled)}
-        onClick={props.onClick}
-        type={props.type}
-        {...props.extraAttrs}>
-        <span>
-            {props.children}
-        </span>
-    </button>
+  <button
+    disabled={props.isDisabled}
+    className={generateClassNameList(props.className, props.isDisabled)}
+    onClick={props.onClick}
+    type={props.type}
+    {...props.extraAttrs}
+  >
+    <span>{props.children}</span>
+  </button>
 );
 
 Button.defaultProps = {
-    isDisabled: false,
-    type: "button",
+  isDisabled: false,
+  type: "button",
 };
 
 export default Button;

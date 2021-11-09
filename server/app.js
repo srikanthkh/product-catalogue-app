@@ -15,8 +15,12 @@ module.exports.App = async () => {
   products.forEach(async product =>   {
     await db.exec(`INSERT INTO products (id, name, price, count) VALUES (${product.id}, "${product.name}", ${product.price}, ${product.count})`)
   });
+  
   const app = express();
-  app.use(function(req, res, next) {
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(express.static(path.join(__dirname, '../client/build')))
+  app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
     res.setHeader(
       'Access-Control-Allow-Methods',
@@ -29,35 +33,55 @@ module.exports.App = async () => {
     )
     next()
   })
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(express.static(path.join(__dirname, '../client/build')))
-  app.get('/products', async (req, res) => {
-    const products = await db.all('SELECT * FROM products')
-    if (req.query.currency && currencies.find(currency => (req.query.currency === currency))) {
-      request(CurrencyAPI.url, (error, response, body) => {
-        if (!error && response.statusCode == 200) {
-          const { quotes } = JSON.parse(response.body);
-          for (const product of products){
-            product.price =  (product.price * 1/quotes[`USD${req.query.currency}`]).toFixed(2);
-          }
-          res.send(products);
+
+  const fetchExchangeRates = async () => {
+    return new Promise((resolve, reject) => {
+      request(CurrencyAPI.url,(error, res) => {
+        if (!error && res.statusCode == 200) {
+          resolve(JSON.parse(res.body).quotes);
         } else {
-          res.status(response.statusCode).send(error)
+          reject(error);
         }
-      })
+      });
+    });
+  }
+
+  const convertToCurrency = (products, currency, quotes) => {
+    for (const product of products){
+      product.price =  (product.price * quotes[`USD${currency}`]).toFixed(2);
+    }
+    return products;
+  }
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
+  })
+
+  app.get('/products', async (req, res) => {
+    const { currency } = req.query;
+    const products = await db.all('SELECT * FROM products')
+    if (currency && currencies.includes(currency)) {
+      const quotes = await fetchExchangeRates();
+      res.send(convertToCurrency(products, currency, quotes));
     } else {
       res.send(products);
     }
   });
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'))
-  })
+
   app.put('/products/:id',  async (req, res) => {
-    const { count } = await db.get(`SELECT count FROM products WHERE id = ${req.params.id}`)
-    await db.exec(`UPDATE products SET name = "${req.body.name}", price = ${req.body.price}, count = ${count + 1 } WHERE id = ${req.params.id}`)
-    const products = await db.all('SELECT * FROM products')
-    res.send(products);
+    const { price, currency, name } = req.body;
+    const { id } = req.params;
+    const isNotUsd = currency && currencies.includes(currency)
+    const { count } = await db.get(`SELECT count FROM products WHERE id = ${id}`)
+    if (isNotUsd) {
+      const quotes = await fetchExchangeRates();
+      await db.exec(`UPDATE products SET name = "${name}", price = ${(price * (1/quotes[`USD${currency}`])).toFixed(2)}, count = ${count + 1} WHERE id = ${id}`)
+      const products = await db.all('SELECT * FROM products')
+      res.send(convertToCurrency(products, currency, quotes));
+    }  else {
+      await db.exec(`UPDATE products SET name = "${name}", price = ${price}, count = ${count + 1} WHERE id = ${id}`)
+      res.send(await db.all('SELECT * FROM products'));
+    }
   });
   return app;
 };
